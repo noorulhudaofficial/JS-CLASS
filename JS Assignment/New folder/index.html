@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <button onclick="startGame()">Start Game</button>
+
+<script>
+function startGame() {
+    let secretNumber = Math.floor(Math.random() * 5) + 1;
+    let guess = prompt("1 se 5 tak number guess karo:");
+
+    if (guess == secretNumber) {
+        alert("Sahi guess kia! 🎉");
+    } else {
+        alert("Galat guess! Sahi number tha: " + secretNumber);
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let itemCount = prompt("Enter total number of items:");
+
+if (itemCount === "" || isNaN(itemCount) || itemCount <= 0) {
+    alert("Invalid number of items! Dobara sahi number enter karein.");
+} else {
+
+    let summary = "";
+    let grandTotal = 0;
+
+    for (let i = 1; i <= itemCount; i++) {
+        
+        let name = prompt(`Item ${i} Name:`);
+        let price = prompt(`Item ${i} Price:`); 
+        let quantity = prompt(`Item ${i} Quantity:`);
+
+        // Validation
+        if (name === "" || price === "" || quantity === "") {
+            alert("Koi field empty na chhoriye. Dobara program run karein.");
+            break;
+        }
+
+        if (isNaN(price) || isNaN(quantity)) {
+            alert("Price aur Quantity numbers honi chahiye. Dobara sahi values enter karein.");
+            break;
+        }
+
+        price = Number(price);
+        quantity = Number(quantity);
+
+        let total = price * quantity;
+
+        summary += `${name} → ${total}\n`;
+        grandTotal += total;
+    }
+
+    alert(`Your Shopping Summary:\n${summary}\nGrand Total: ${grandTotal}`);
+}
+
+    </script>
+</body>
+</html>
