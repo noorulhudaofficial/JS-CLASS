@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School Dashboard - Noor-ul-Huda</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- SIDEBAR -->
+  <div class="flex">
+
+    <aside class="w-64 bg-white shadow-lg min-h-screen p-6 hidden md:block">
+      <h2 class="text-2xl font-bold mb-8">📚 School Admin</h2>
+
+      <ul class="space-y-4 text-gray-700 font-medium">
+        <li class="hover:text-blue-600 cursor-pointer">Dashboard</li>
+        <li class="hover:text-blue-600 cursor-pointer">Students</li>
+        <li class="hover:text-blue-600 cursor-pointer">Teachers</li>
+        <li class="hover:text-blue-600 cursor-pointer">Courses</li>
+        <li class="hover:text-blue-600 cursor-pointer">Attendance</li>
+      </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1">
+
+      <!-- NAVBAR -->
+      <nav class="flex items-center justify-between bg-white shadow px-6 py-4 sticky top-0">
+        <h1 class="text-xl font-semibold">Welcome, Noor-ul-Huda</h1>
+
+        <!-- Mobile Menu Button -->
+        <button id="menuBtn" class="md:hidden text-3xl">☰</button>
+
+        <div class="hidden md:block">
+          <button class="px-4 py-2 bg-blue-600 text-white rounded-full">Logout</button>
+        </div>
+      </nav>
+
+      <!-- MOBILE SIDEBAR -->
+      <div id="mobileMenu" class="hidden bg-white p-6 shadow md:hidden">
+        <ul class="space-y-4 text-gray-700 font-medium">
+          <li class="hover:text-blue-600 cursor-pointer">Dashboard</li>
+          <li class="hover:text-blue-600 cursor-pointer">Students</li>
+          <li class="hover:text-blue-600 cursor-pointer">Teachers</li>
+          <li class="hover:text-blue-600 cursor-pointer">Courses</li>
+          <li class="hover:text-blue-600 cursor-pointer">Attendance</li>
+        </ul>
+      </div>
+
+      <!-- DASHBOARD CARDS -->
+      <section class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="bg-white p-6 rounded-xl shadow">
+          <h3 class="text-gray-600">Total Students</h3>
+          <p class="text-3xl font-bold mt-2">1,245</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow">
+          <h3 class="text-gray-600">Total Teachers</h3>
+          <p class="text-3xl font-bold mt-2">62</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow">
+          <h3 class="text-gray-600">Total Courses</h3>
+          <p class="text-3xl font-bold mt-2">38</p>
+        </div>
+
+      </section>
+
+      <!-- TABLE SECTION -->
+      <section class="p-6">
+        <h2 class="text-xl font-semibold mb-4">Recent Students</h2>
+
+        <div class="overflow-x-auto bg-white rounded-xl shadow">
+          <table class="w-full text-left">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="p-3">ID</th>
+                <th class="p-3">Name</th>
+                <th class="p-3">Class</th>
+                <th class="p-3">Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="border-b">
+                <td class="p-3">101</td>
+                <td class="p-3">Ali Raza</td>
+                <td class="p-3">10-A</td>
+                <td class="p-3 text-green-600 font-semibold">Active</td>
+              </tr>
+              <tr class="border-b">
+                <td class="p-3">102</td>
+                <td class="p-3">Hina Noor</td>
+                <td class="p-3">9-B</td>
+                <td class="p-3 text-green-600 font-semibold">Active</td>
+              </tr>
+              <tr>
+                <td class="p-3">103</td>
+                <td class="p-3">Ahmed Khan</td>
+                <td class="p-3">8-C</td>
+                <td class="p-3 text-red-600 font-semibold">Inactive</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="text-center py-6 text-gray-600">
+        © 2025 School Dashboard | Built by Noor-ul-Huda
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  </script>
+
+</body>
+</html>
