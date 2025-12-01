@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Commerce Cart | Noor-ul-Huda</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow px-6 py-4 flex justify-between items-center sticky top-0">
+    <h1 class="text-2xl font-bold">🛍️ Noor Shop</h1>
+
+    <div class="flex items-center space-x-4">
+      <p class="font-semibold">Cart: <span id="cartCount">0</span></p>
+    </div>
+  </nav>
+
+  <!-- PRODUCTS -->
+  <section class="p-6">
+    <h2 class="text-2xl font-semibold mb-4">Products</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+      <!-- PRODUCT 1 -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="https://via.placeholder.com/300" alt="Product" class="rounded">
+        <h3 class="text-lg font-semibold mt-2">Smart Watch</h3>
+        <p class="text-gray-600">Rs. 3500</p>
+        <button 
+          onclick="addToCart('Smart Watch', 3500)" 
+          class="mt-3 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- PRODUCT 2 -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="https://via.placeholder.com/300" alt="Product" class="rounded">
+        <h3 class="text-lg font-semibold mt-2">Wireless Earbuds</h3>
+        <p class="text-gray-600">Rs. 2500</p>
+        <button 
+          onclick="addToCart('Wireless Earbuds', 2500)" 
+          class="mt-3 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- PRODUCT 3 -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="https://via.placeholder.com/300" alt="Product" class="rounded">
+        <h3 class="text-lg font-semibold mt-2">Bluetooth Speaker</h3>
+        <p class="text-gray-600">Rs. 4500</p>
+        <button 
+          onclick="addToCart('Bluetooth Speaker', 4500)" 
+          class="mt-3 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          Add to Cart
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="p-6">
+    <!-- PRODUCT 4 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        
+        <div class="bg-white p-4 rounded-lg shadow">
+        <img src="./imgs/headphones.png" alt="Product" class="rounded">
+        <h3 class="text-lg font-semibold mt-2">Headphones</h3>
+        <p class="text-gray-600">Rs. 5500</p>
+        <button 
+          onclick="addToCart('Headphones', 5500)" 
+          class="mt-3 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          Add to Cart
+        </button>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg shadow">
+        <img src="./imgs/microphone.png" alt="Product" class="rounded">
+        <h3 class="text-lg font-semibold mt-2">Microphones</h3>
+        <p class="text-gray-600">Rs. 3000</p>
+        <button 
+          onclick="addToCart('Microphones', 3000)" 
+          class="mt-3 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART -->
+  <section class="p-6">
+    <h2 class="text-2xl font-semibold mb-4">Your Cart</h2>
+
+    <div class="bg-white p-4 rounded-lg shadow overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2">Product</th>
+            <th class="p-2">Price</th>
+            <th class="p-2">Qty</th>
+            <th class="p-2">Total</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="cartTable"></tbody>
+      </table>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="text-right mt-4 text-xl font-semibold">
+      Grand Total: Rs <span id="grandTotal">0</span>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-6 text-gray-600">
+    © 2025 Noor-ul-Huda — E-Commerce Cart Project
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      let existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ name, price, qty: 1 });
+      }
+
+      updateCart();
+    }
+
+    function updateCart() {
+      const table = document.getElementById("cartTable");
+      const cartCount = document.getElementById("cartCount");
+      const grandTotal = document.getElementById("grandTotal");
+
+      table.innerHTML = "";
+      let total = 0;
+      let count = 0;
+
+      cart.forEach((item, index) => {
+        let itemTotal = item.qty * item.price;
+        total += itemTotal;
+        count += item.qty;
+
+        table.innerHTML += `
+          <tr class="border-b">
+            <td class="p-3">${item.name}</td>
+            <td class="p-3">Rs ${item.price}</td>
+            <td class="p-3">
+              <input type="number" min="1" value="${item.qty}" 
+                onchange="updateQty(${index}, this.value)"
+                class="border w-16 p-1">
+            </td>
+            <td class="p-3 font-semibold">Rs ${itemTotal}</td>
+            <td class="p-3">
+              <button onclick="removeItem(${index})"
+                class="bg-red-500 text-white px-3 py-1 rounded">
+                Remove
+              </button>
+            </td>
+          </tr>`;
+      });
+
+      cartCount.innerText = count;
+      grandTotal.innerText = total;
+    }
+
+    function updateQty(index, qty) {
+      cart[index].qty = parseInt(qty);
+      updateCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+  </script>
+
+</body>
+</html>
