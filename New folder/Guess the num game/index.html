@@ -6,15 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+    <h3 id="result"></h3>
     
     <script>
-        let secreteNum = Math.floor(Math.random())*10+1;
-        let userGuess=prompt("Guess the between 1-10");
-        userGuess=Number(userGuess);
+        let secreteNum = Math.floor(Math.random()*11);
+        let userGuess= +prompt("Guess the between 1-10");
+        let result = document.getElementById("result");
         if(userGuess === secreteNum){
-            alert("Congratulations you guessed the correct number.");
+          result.innerHtml ="Congratulations you guessed the correct number."  + secreteNum ;
         }else{
-            alert("Wrong guess The correct number was " + secreteNum );
+            result.innerHTML = "Wrong guess the correct num is "  + secreteNum;
         }
         
     </script>
