@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess The Number Game</title>
+
+<style>
+*{
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+:root{
+    --bg-gradient: linear-gradient(135deg, #6a11cb, #2575fc);
+    --card-bg: #ffffff;
+    --text-color: #000;
+    --btn-bg: #6a11cb;
+    --btn-hover: #2575fc;
+}
+
+body.dark{
+    --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    --card-bg: #1e1e1e;
+    --text-color: #fff;
+    --btn-bg: #333;
+    --btn-hover: #555;
+}
+
+body{
+    min-height: 100vh;
+    margin: 0;
+    background: var(--bg-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    padding: 15px;
+    color: var(--text-color);
+}
+
+.game-box{
+    width: 100%;
+    max-width: 360px;
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+h2{
+    margin-bottom: 5px;
+}
+
+select, input, button{
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input, select{
+    border: 1px solid #ccc;
+}
+
+button{
+    border: none;
+    cursor: pointer;
+    background: var(--btn-bg);
+    color: white;
+}
+
+button:hover{
+    background: var(--btn-hover);
+}
+
+#message{
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.info{
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+footer{
+    margin-top: 15px;
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+/* Dark Mode Toggle */
+.toggle{
+    text-align: right;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-box">
+
+    <div class="toggle" onclick="toggleTheme()">🌙 / ☀️</div>
+
+    <h2>🎯 Guess the Number</h2>
+    <p id="rangeText">Between 1 and 10</p>
+
+    <select id="difficulty" onchange="changeDifficulty()">
+        <option value="easy">Easy (1–10)</option>
+        <option value="hard">Hard (1–20)</option>
+    </select>
+
+    <input type="number" id="guessInput" placeholder="Enter number">
+
+    <button onclick="checkGuess()">Guess</button>
+    <button onclick="restartGame()">Restart 🔄</button>
+
+    <p id="message"></p>
+
+    <div class="info">
+        ⏱ Time: <span id="time">30</span>s <br>
+        🔢 Attempts: <span id="attempts">0</span> <br>
+        🏆 Score: <span id="score">0</span>
+    </div>
+
+    <footer>Created by <b>Huda Khan</b></footer>
+</div>
+
+<!-- Sounds -->
+<audio id="winSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+<audio id="loseSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-over-194.mp3"></audio>
+<audio id="clickSound" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
+
+<script>
+let secretNumber;
+let attempts = 0;
+let timeLeft = 30;
+let timer;
+let score = 0;
+let maxNumber = 10;
+
+startGame();
+
+function startGame(){
+    secretNumber = Math.floor(Math.random() * maxNumber) + 1;
+    attempts = 0;
+    timeLeft = 30;
+
+    document.getElementById("attempts").innerText = attempts;
+    document.getElementById("time").innerText = timeLeft;
+    document.getElementById("message").innerText = "";
+    document.getElementById("guessInput").value = "";
+
+    clearInterval(timer);
+    timer = setInterval(()=>{
+        timeLeft--;
+        document.getElementById("time").innerText = timeLeft;
+
+        if(timeLeft === 0){
+            clearInterval(timer);
+            document.getElementById("message").innerText =
+                "⏰ Time Up! Number was " + secretNumber;
+            document.getElementById("loseSound").play();
+        }
+    },1000);
+}
+
+function checkGuess(){
+    document.getElementById("clickSound").play();
+
+    let guess = Number(document.getElementById("guessInput").value);
+
+    if(!guess || guess < 1 || guess > maxNumber){
+        document.getElementById("message").innerText =
+            "⚠ Enter number between 1 and " + maxNumber;
+        return;
+    }
+
+    attempts++;
+    document.getElementById("attempts").innerText = attempts;
+
+    if(guess === secretNumber){
+        document.getElementById("message").innerText = "🎉 Correct! You Won!";
+        document.getElementById("winSound").play();
+        score += 10;
+        document.getElementById("score").innerText = score;
+        clearInterval(timer);
+    } 
+    else if(guess > secretNumber){
+        document.getElementById("message").innerText = "📉 Too High!";
+    } 
+    else{
+        document.getElementById("message").innerText = "📈 Too Low!";
+    }
+}
+
+function restartGame(){
+    startGame();
+}
+
+function changeDifficulty(){
+    let level = document.getElementById("difficulty").value;
+    maxNumber = level === "easy" ? 10 : 20;
+    document.getElementById("rangeText").innerText =
+        level === "easy" ? "Between 1 and 10" : "Between 1 and 20";
+    restartGame();
+}
+
+/* Dark / Light Toggle */
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html>
